@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DescriptionActivity"
+    android:orientation="vertical">
+
+    <Toolbar
+        android:id="@+id/toolbar_da"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="Feeds"
+        android:titleTextColor="#ffffff"
+        android:background="#03A9F4"
+        android:navigationIcon="@drawable/ic_arrow_back_white_24dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+                    android:id="@+id/da_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="days ago"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/da_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500m away"
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:gravity="end"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:weightSum="2">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Complaint by"/>
+
+                    <TextView
+                        android:id="@+id/da_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rajat Sahu"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:textSize="15dp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/da_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        android:text="Open"
+                        android:textColor="#F44336"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:background="@drawable/background_status_1"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" >
+                <VideoView
+                    android:id="@+id/da_videoview"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_play_circle_outline_white_24dp"/>
+            </FrameLayout>
+
+            <!--        <ImageView-->
+            <!--            android:id="@+id/imageComplaintVideo"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="150dp"-->
+            <!--            android:layout_marginTop="15dp"-->
+            <!--            android:src="@drawable/video_placeholder"/>-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Department : "/>
+                <TextView
+                    android:id="@+id/da_dept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Public Works Department"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assigned To : "/>
+                <TextView
+                    android:id="@+id/da_officer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mr. Rajesh Garg"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/da_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dec 10,2019"
+                android:textColor="#000000"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_place_black_24dp"
+                    android:layout_marginTop="-2dp"/>
+                <TextView
+                    android:id="@+id/da_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="36 Vikram Vihar Marg, Roorkee"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"/>
+            <TextView
+                android:id="@+id/da_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description of scenario"
+                android:textColor="#000000"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/da_like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"/>
+                    <ImageView
+                        android:id="@+id/da_iv_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_thumb_up_green_24dp"
+                        android:padding="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/background_like"
+                        android:elevation="5dp"/>
+                    <!--            <view-->
+                    <!--                android:layout_width="2dp"-->
+                    <!--                android:layout_height="match_parent"-->
+                    <!--                android:layout_marginLeft="15dp"/>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="|"-->
+<!--                        android:textColor="#555555"-->
+<!--                        android:textSize="25dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginRight="10dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="center" />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/da_comment_count"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="5"/>-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/da_iv_comment"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_mode_comment_green_24dp"-->
+<!--                        android:padding="3dp"-->
+<!--                        android:background="@drawable/background_like"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:layout_marginLeft="5dp"/>-->
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignEnd="@+id/share_da"
+                    android:layout_marginEnd="40dp"
+                    android:textColor="#000000"
+                    android:text="Share"/>
+
+                <ImageView
+                    android:id="@+id/share_da"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_share"
+                    android:padding="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="25dp"
+                    android:src="@drawable/ic_share_white_24dp"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:elevation="2dp"
+                android:layout_margin="2dp"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Officer's Comment :"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"
+                    />
+                <TextView
+                    android:id="@+id/da_officer_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No comments"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

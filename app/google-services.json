@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "630798079099",
+    "firebase_url": "https://ashokatechforchange.firebaseio.com",
+    "project_id": "ashokatechforchange",
+    "storage_bucket": "ashokatechforchange.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630798079099:android:19c60b89281ac644d3fede",
+        "android_client_info": {
+          "package_name": "com.example.ashoktechforchange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630798079099-f37tvljq39h1h1vmkdtu8a6d24v6gqnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVYbhd-R8e5w3hl3MfFPoRHAfc3Q4tBk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630798079099-f37tvljq39h1h1vmkdtu8a6d24v6gqnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

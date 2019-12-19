@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyComplaintAcitvity"
+    android:orientation="vertical">
+    <Toolbar
+        android:id="@+id/toolbar_my_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="My Activity"
+        android:titleTextColor="#ffffff"
+        android:background="#03A9F4"
+        android:navigationIcon="@drawable/ic_arrow_back_white_24dp">
+
+    </Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/card_feeds"
+        android:layout_marginTop="5dp"
+
+        tools:itemCount="10">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
