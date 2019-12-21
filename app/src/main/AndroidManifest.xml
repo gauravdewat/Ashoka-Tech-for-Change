@@ -12,12 +12,26 @@
     <application
         android:name=".Utils.MyFirebaseApp"
         android:allowBackup="true"
-        android:icon="@drawable/ashokaindia"
+        android:icon="@drawable/logonew"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ashokaindia"
+        android:roundIcon="@drawable/logonew"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DescriptionActivity"></activity>
+        <activity android:name=".VideoPlayerActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DescriptionActivity" >
+            <intent-filter android:label="Sahuliyat">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http"
+                    android:host="www.sahuliyat.com"
+                    android:pathPrefix="/share"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ComplaintDetailsActivity" />
         <activity android:name=".MyComplaintAcitvity" />
         <activity android:name=".MainActivity" />

@@ -1,18 +1,22 @@
 package com.example.ashoktechforchange;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,9 +32,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -44,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nv;
     private FloatingActionButton fab;
     Toolbar toolbar;
+    TextView nav_username, nav_mobileNo;
 
     String uid;
     FirebaseAuth auth;
     DatabaseReference compDatabase;
+    DatabaseReference userDatabase;
     FirebaseAuth.AuthStateListener authListener;
 
     FirebaseRecyclerAdapter adapter;
@@ -85,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
         t.syncState();
 
         nv = (NavigationView)findViewById(R.id.nv);
+
+
+        View headerView = nv.inflateHeaderView(R.layout.header_navigation_drawer);
+
+
+        nav_username = headerView.findViewById(R.id.nav_username);
+        nav_mobileNo = headerView.findViewById(R.id.nav_mobile);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -115,6 +130,34 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ComplaintDetailsActivity.class));
             }
         });
+
+
+        initNav();
+    }
+
+    private void initNav(){
+        userDatabase.child(uid).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                nav_username.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                nav_username.setText("Not Available");
+            }
+        });
+        userDatabase.child(uid).child("mobileNo").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                nav_mobileNo.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                nav_mobileNo.setText("Not Available");
+            }
+        });
     }
 
     private void initRecyclerView(){
@@ -129,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         uid = auth.getCurrentUser().getUid();
 
         compDatabase = FirebaseDatabase.getInstance().getReference().child("complaints");
+        userDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -235,6 +279,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareComp(complaint.getCompID());
+                    }
+                });
+
                 holder.readMore.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -328,4 +379,21 @@ public class MainActivity extends AppCompatActivity {
     private void unLikePost(String compID){
         compDatabase.child(compID).child("Like").child(uid).removeValue();
     }
+    private void shareComp(String compID) {
+        String referralMessage = "Hey ! Your friend is facing a civic issue in his locality. He has registered a complaint regarding the same. Click here ";
+        String link = "http://www.sahooliyat.com/share/"+compID;
+        String inviteMessage = referralMessage + " " + link+ " to view the complaint and see updates.";
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, inviteMessage);
+        Intent receiver = new Intent(android.content.Intent.ACTION_SEND);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            startActivity(Intent.createChooser(shareIntent, "SHARE with:",pendingIntent.getIntentSender()));
+        }else{
+            startActivity(Intent.createChooser(shareIntent, "SHARE with:"));
+
+        }
+    }
+
 }

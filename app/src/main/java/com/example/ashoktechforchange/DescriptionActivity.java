@@ -6,11 +6,14 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DescriptionActivity extends AppCompatActivity {
 
@@ -46,9 +50,13 @@ public class DescriptionActivity extends AppCompatActivity {
     TextView desc;
     TextView duration;
     TextView officerComment;
+    TextView playVideo;
 
     ImageView iv_like;
     ImageView iv_comment;
+    ImageView iv_share;
+
+    String videoURL;
 
     Boolean isLiked = false;
 
@@ -77,7 +85,20 @@ public class DescriptionActivity extends AppCompatActivity {
 
     private void getCompID(){
         Intent intent = getIntent();
-        compID = intent.getStringExtra("compID");
+
+        if (intent!=null && intent.getData()!=null
+                && (intent.getData().getScheme().equals("http"))){
+            Log.d("********************","deep link opened");
+            Uri data = intent.getData();
+            List<String> pathSegments = data.getPathSegments();
+            if(pathSegments.size()>0)
+                compID=pathSegments.get(1); // This will give you prefix as path
+            Log.d("********************","compID = " + compID);
+        }
+        else {
+            compID = intent.getStringExtra("compID");
+        }
+
     }
 
     private void initFirebase(){
@@ -100,6 +121,7 @@ public class DescriptionActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_da);
         duration = findViewById(R.id.da_duration);
+        playVideo = findViewById(R.id.showVideo);
         name = findViewById(R.id.da_name);
         status = findViewById(R.id.da_status);
         department = findViewById(R.id.da_dept);
@@ -108,9 +130,8 @@ public class DescriptionActivity extends AppCompatActivity {
         like = findViewById(R.id.da_like_count);
         desc = findViewById(R.id.da_desc);
         officeName = findViewById(R.id.da_officer);
-        videoView = findViewById(R.id.da_videoview);
         iv_like = findViewById(R.id.da_iv_like);
-        iv_comment = findViewById(R.id.da_iv_comment);
+        iv_share = findViewById(R.id.share_da);
         officerComment = findViewById(R.id.da_officer_comment);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -120,10 +141,13 @@ public class DescriptionActivity extends AppCompatActivity {
             }
         });
 
-        videoView.setOnClickListener(new View.OnClickListener() {
+        playVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                videoView.start();
+                Intent i = new Intent(DescriptionActivity.this, VideoPlayerActivity.class);
+                i.putExtra("videoURL", videoURL);
+                startActivity(i);
+                //videoView.start();
             }
         });
 
@@ -133,13 +157,20 @@ public class DescriptionActivity extends AppCompatActivity {
                 if(isLiked){
                     unLikePost();
                     isLiked = false;
-                    iv_like.setImageDrawable(ContextCompat.getDrawable(DescriptionActivity.this,R.drawable.ic_thumb_up_grey_24dp));
+                    iv_like.setImageDrawable(ContextCompat.getDrawable(DescriptionActivity.this,R.drawable.ic_upvote_grey_24dp));
                 }
                 else {
                     likePost();
                     isLiked = true;
-                    iv_like.setImageDrawable(ContextCompat.getDrawable(DescriptionActivity.this,R.drawable.ic_thumb_up_green_24dp));
+                    iv_like.setImageDrawable(ContextCompat.getDrawable(DescriptionActivity.this,R.drawable.ic_upvote_green_24dp));
                 }
+            }
+        });
+
+        iv_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareComp();
             }
         });
 
@@ -156,7 +187,8 @@ public class DescriptionActivity extends AppCompatActivity {
         officeName.setText(complaintData.getOfficerName());
         desc.setText(complaintData.getDescription());
         officerComment.setText(complaintData.getOfficerComment());
-        setVideo(complaintData.getVideoUrl());
+        videoURL = complaintData.getVideoUrl();
+        //setVideo();
 
         if (isLiked){
             iv_like.setImageDrawable(ContextCompat.getDrawable(DescriptionActivity.this,R.drawable.ic_thumb_up_green_24dp));
@@ -213,15 +245,15 @@ public class DescriptionActivity extends AppCompatActivity {
         int background = R.drawable.background_status_1 ;
         int color = Color.parseColor("#E60000");
         switch (statusNo){
-            case 1 : taskStatus = "OPEN";
+            case 1 : taskStatus = "PENDING";
                 background = R.drawable.background_status_1;
                 color = Color.parseColor("#E60000");
                 break;
-            case 2 : taskStatus = "PROGRESS";
+            case 2 : taskStatus = "IN PROCESS";
                 background = R.drawable.background_status_2;
                 color = Color.parseColor("#FF7800");
                 break;
-            case 3 : taskStatus = "FIXED";
+            case 3 : taskStatus = "RESOLVED";
                 background = R.drawable.background_status_3;
                 color = Color.parseColor("#4CBB17");
                 break;
@@ -295,5 +327,23 @@ public class DescriptionActivity extends AppCompatActivity {
         private void unLikePost(){
             compDatabase.child(compID).child("Like").child(uID).removeValue();
         }
+
+    private void shareComp() {
+        //Hey ! Your friend is facing a civic issue in his locality. He has registered a complaint regarding the same. Click here .... to view the complaint.
+        String referralMessage = "Hey ! Your friend is facing a civic issue in his locality. He has registered a complaint regarding the same. Click here ";
+        String link = "http://www.sahooliyat.com/share/"+compID;
+        String inviteMessage = referralMessage + " " + link+ " to view the complaint and see updates.";
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, inviteMessage);
+        Intent receiver = new Intent(android.content.Intent.ACTION_SEND);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            startActivity(Intent.createChooser(shareIntent, "SHARE with:",pendingIntent.getIntentSender()));
+        }else{
+            startActivity(Intent.createChooser(shareIntent, "SHARE with:"));
+
+        }
+    }
 
 }

@@ -12,7 +12,7 @@
         android:id="@+id/toolbar_da"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="Feeds"
+        android:title="Complaint Description"
         android:titleTextColor="#ffffff"
         android:background="#03A9F4"
         android:navigationIcon="@drawable/ic_arrow_back_white_24dp"/>
@@ -101,22 +101,6 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" >
-                <VideoView
-                    android:id="@+id/da_videoview"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"/>
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_play_circle_outline_white_24dp"/>
-            </FrameLayout>
-
             <!--        <ImageView-->
             <!--            android:id="@+id/imageComplaintVideo"-->
             <!--            android:layout_width="match_parent"-->
@@ -197,6 +181,21 @@
                 android:layout_height="wrap_content"
                 android:text="Description of scenario"
                 android:textColor="#000000"/>
+
+
+            <TextView
+                android:id="@+id/showVideo"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:text="Play Video"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/ic_play_circle_outline_white_24dp"
+                android:padding="20dp"
+                android:background="#000000"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:elevation="10dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

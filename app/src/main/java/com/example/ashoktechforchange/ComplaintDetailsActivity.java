@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class ComplaintDetailsActivity extends AppCompatActivity {
     String currentTime;
     ProgressDialog progressDialog;
     private static int VIDEO_REQUEST = 101;
+
+    CheckBox chk1, chk2, chk3,chk4, chk5, chk6, chk7,chk8,chk9;
 
 
     @Override
@@ -109,13 +112,23 @@ public class ComplaintDetailsActivity extends AppCompatActivity {
         location = findViewById(R.id.et_place);
         description = findViewById(R.id.et_description);
 
+        chk1 = findViewById(R.id.chk1);
+        chk2 = findViewById(R.id.chk2);
+        chk3 = findViewById(R.id.chk3);
+        chk4 = findViewById(R.id.chk4);
+        chk5 = findViewById(R.id.chk5);
+        chk6 = findViewById(R.id.chk6);
+        chk7 = findViewById(R.id.chk7);
+        chk8 = findViewById(R.id.chk8);
+        chk9 = findViewById(R.id.chk9);
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!validateInfo()) return;
                 progressDialog.show();
                 uploadVideo();
-                Toast.makeText(ComplaintDetailsActivity.this,"Register Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ComplaintDetailsActivity.this,"Register Clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -162,7 +175,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity {
         DatabaseReference ref = mDatabase.push();
         compID = ref.getKey();
         Complaint complaint = new Complaint("NA","No comments",userName,uid,"UNASSIGNED",description.getText().toString().trim(),
-                location.getText().toString().trim(), 1,date,videoUrl,"latlong","unassigned",0,compID,currentTime,"tag","yes");
+                location.getText().toString().trim(), 1,date,videoUrl,"latlong","unassigned",0,compID,currentTime,getTags(),"yes");
 
         ref.setValue(complaint).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -201,11 +214,11 @@ public class ComplaintDetailsActivity extends AppCompatActivity {
     }
 
     private void setTime(){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
         Date currentLocalTime = cal.getTime();
         DateFormat date = new SimpleDateFormat("HH:mm a");
 // you can get seconds by adding  "...:ss" to it
-        date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+        date.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
 
         currentTime = date.format(currentLocalTime);
     }
@@ -238,6 +251,44 @@ public class ComplaintDetailsActivity extends AppCompatActivity {
         if(requestCode == VIDEO_REQUEST && resultCode == RESULT_OK){
             videoUri = data.getData();
         }
+        else{
+            finish();
+        }
+    }
+
+    private String getTags(){
+
+        String tags = "";
+
+        if (chk1.isChecked()){
+            tags = tags + " " + chk1.getText();
+        }
+        if (chk2.isChecked()){
+            tags = tags + " " + chk2.getText();
+        }
+        if (chk3.isChecked()){
+            tags = tags + " " + chk3.getText();
+        }
+        if (chk4.isChecked()){
+            tags = tags + " " + chk4.getText();
+        }
+        if (chk5.isChecked()){
+            tags = tags + " " + chk5.getText();
+        }
+        if (chk6.isChecked()){
+            tags = tags + " " + chk6.getText();
+        }
+        if (chk7.isChecked()){
+            tags = tags + " " + chk7.getText();
+        }
+        if (chk8.isChecked()){
+            tags = tags + " " + chk8.getText();
+        }
+        if (chk9.isChecked()){
+            tags = tags + " " + chk9.getText();
+        }
+        Toast.makeText(this,tags,Toast.LENGTH_SHORT).show();
+        return tags.trim();
     }
 
 }

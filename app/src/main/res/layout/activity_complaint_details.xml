@@ -85,16 +85,19 @@
             android:layout_marginTop="15dp"
             android:weightSum="3">
             <CheckBox
+                android:id="@+id/chk1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Electricity Line"
+                android:text="Electricity_Line"
                 android:layout_weight="1"/>
             <CheckBox
+                android:id="@+id/chk2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pothole"
                 android:layout_weight="1"/>
             <CheckBox
+                android:id="@+id/chk3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Garbage"
@@ -108,16 +111,19 @@
             android:layout_marginTop="15dp"
             android:weightSum="3">
             <CheckBox
+                android:id="@+id/chk4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Street Light"
+                android:text="Street_Light"
                 android:layout_weight="1"/>
             <CheckBox
+                android:id="@+id/chk5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Water Supply"
+                android:text="Water_Supply"
                 android:layout_weight="1"/>
             <CheckBox
+                android:id="@+id/chk6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hospital"
@@ -131,19 +137,22 @@
             android:layout_marginTop="15dp"
             android:weightSum="3">
             <CheckBox
+                android:id="@+id/chk7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Drainage"
                 android:layout_weight="1"/>
             <CheckBox
+                android:id="@+id/chk8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Waste Management"
+                android:text="Waste_Management"
                 android:layout_weight="1"/>
             <CheckBox
+                android:id="@+id/chk9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Market Place"
+                android:text="Market_Place"
                 android:layout_weight="1"/>
         </LinearLayout>
 

@@ -28,6 +28,7 @@ public class ViewHolder  extends RecyclerView.ViewHolder {
     TextView like;
     TextView duration;
     public ImageView likeButton;
+    public ImageView shareButton;
 //    public VideoView videoView;
     ImageView imageView;
 
@@ -41,6 +42,7 @@ public class ViewHolder  extends RecyclerView.ViewHolder {
         address = itemView.findViewById(R.id.card_addr);
         like = itemView.findViewById(R.id.card_like);
         likeButton = itemView.findViewById(R.id.card_iv_like);
+        shareButton = itemView.findViewById(R.id.da_iv_share);
         duration = itemView.findViewById(R.id.card_duration);
 
 //        videoView = itemView.findViewById(R.id.imageComplaintVideo);
@@ -97,10 +99,10 @@ public class ViewHolder  extends RecyclerView.ViewHolder {
 
     public void setLikeButton(String isLiked, Context context) {
         if (isLiked.equals("yes")){
-            this.likeButton.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_thumb_up_green_24dp));
+            this.likeButton.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_upvote_green_24dp));
         }
         else {
-            this.likeButton.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_thumb_up_grey_24dp));
+            this.likeButton.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_upvote_grey_24dp));
         }
     }
 

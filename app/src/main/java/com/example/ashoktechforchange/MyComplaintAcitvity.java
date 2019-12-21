@@ -1,6 +1,8 @@
 package com.example.ashoktechforchange;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -187,6 +189,13 @@ public class MyComplaintAcitvity extends AppCompatActivity {
                         startActivity(i);
                     }
                 });
+
+                holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareComp(complaint.getCompID());
+                    }
+                });
             }
 
         };
@@ -269,5 +278,22 @@ public class MyComplaintAcitvity extends AppCompatActivity {
 
     private void unLikePost(String compID){
         compDatabase.child(compID).child("Like").child(uid).removeValue();
+    }
+
+    private void shareComp(String compID) {
+        String referralMessage = "Hey ! Your friend is facing a civic issue in his locality. He has registered a complaint regarding the same. Click here ";
+        String link = "http://www.sahooliyat.com/share/"+compID;
+        String inviteMessage = referralMessage + " " + link+ " to view the complaint and see updates.";
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, inviteMessage);
+        Intent receiver = new Intent(android.content.Intent.ACTION_SEND);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            startActivity(Intent.createChooser(shareIntent, "SHARE with:",pendingIntent.getIntentSender()));
+        }else{
+            startActivity(Intent.createChooser(shareIntent, "SHARE with:"));
+
+        }
     }
 }
